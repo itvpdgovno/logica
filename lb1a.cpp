@@ -1,3 +1,4 @@
+#define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -10,19 +11,23 @@ int main(){
 //	int *mass = (int *)malloc(sizeof(int)*size_mass);
 	int **bigmass = (int **)malloc(sizeof(int*)*size_mass);
 	for (int i = 0;i<size_mass;i++){
-		*(bigmass+i*sizeof(int*)) = (int *)malloc(sizeof(int)*size_mass);
+		*(bigmass+i*sizeof(int**)) = (int *)malloc(sizeof(int)*size_mass);
 	}
 	for (int j = 0; j < size_mass;j++){
 		for (int i = 0; i < size_mass; i++){
-			*(*(bigmass+i*sizeof(int))+j*sizeof(int*)) = rand() % 50;
-			if (*(*(bigmass+i*sizeof(int))+j*sizeof(int*))  > max) max = *(*(bigmass+i*sizeof(int))+j*sizeof(int*)) ;
-			if (*(*(bigmass+i*sizeof(int))+j*sizeof(int*))  < min) min = *(*(bigmass+i*sizeof(int))+j*sizeof(int*)) ;
-		///	if (*(*(bigmass+i*sizeof(int))+j*sizeof(int*)) % 3 == 0 ) mama++;
-		//	printf(" %i,", *(*(bigmass+i*sizeof(int))+j*sizeof(int*)) );
+			*(*(bigmass + j * sizeof(int**)) + i * sizeof(int*)) = rand() % 50;
+			printf(" %i,", *(*(bigmass + j * sizeof(int**)) + i * sizeof(int*)));
 		}
 		printf("\n");
 	}
-	printf("\nmax: %i min: %i, diff = %i\n, count of mod 3", max, min, max-min,mama);
+	for (int j = 0; j < size_mass; j++) {
+		for (int i = 0; i < size_mass; i++) {
+			if (*(*(bigmass + j * sizeof(int**)) + i * sizeof(int*)) > max) max = *(*(bigmass + j * sizeof(int**)) + i * sizeof(int*));
+			if (*(*(bigmass + j * sizeof(int**)) + i * sizeof(int*)) < min) min = *(*(bigmass + j * sizeof(int**)) + i * sizeof(int*));
+			if (*(*(bigmass + j * sizeof(int**)) + i * sizeof(int*)) % 3 == 0) mama++;
+		}
+	}
+	printf("\nmax: %i min: %i, diff = %i, count of mod 3: %i", max, min, max-min,mama);
 	/*int a[2][10], otv;
 	for (int i = 0; i<10;i++){
 		a[0][i] = rand() % 100;

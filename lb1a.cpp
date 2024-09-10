@@ -35,5 +35,8 @@ int main(){
 		otv = a[0][i] + a[1][i];
 		printf("%i, %i, sum = %i\n", a[0][i],a[1][i], otv);
 	}*/
+	for (int i = 0; i < size_mass; i++) {
+		free(*(bigmass + i * sizeof(int**)));
+	}
 	free(bigmass);
 }
